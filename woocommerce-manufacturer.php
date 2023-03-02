@@ -33,10 +33,32 @@ if ( !defined( 'ABSPATH' ) ) {
 class WooCommerce_Manufacturer {
 
 	/**
+	 * @var string[]
+	 */
+	private static $active_plugins = null;
+
+	/**
+	 * Whether WooCommerce is active.
+	 *
+	 * @return boolean
+	 */
+	private static function is_woocommerce_active() {
+		if ( self::$active_plugins === null ) {
+			self::$active_plugins = (array) get_option( 'active_plugins', array() );
+			if ( is_multisite() ) {
+				self::$active_plugins = array_merge( self::$active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+			}
+		}
+		return in_array( 'woocommerce/woocommerce.php', self::$active_plugins ) || array_key_exists( 'woocommerce/woocommerce.php', self::$active_plugins );
+	}
+
+	/**
 	 * Boot this ...
 	 */
 	public static function boot() {
-		add_action( 'init', array( __CLASS__, 'init'), 0 );
+		if ( self::is_woocommerce_active() ) {
+			add_action( 'init', array( __CLASS__, 'init'), 0 );
+		}
 	}
 
 	public static function init() {
