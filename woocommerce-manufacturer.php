@@ -61,6 +61,9 @@ class WooCommerce_Manufacturer {
 		}
 	}
 
+	/**
+	 * Register taxonomy Manufacturer
+	 */
 	public static function init() {
 		$labels = array(
 			'name'                       => esc_html__( 'Manufacturers', 'woocommerce-manufacturer' ),
@@ -82,7 +85,6 @@ class WooCommerce_Manufacturer {
 			'not_found'                  => esc_html__( 'No manufacturers found', ' woocommerce-manufacturer' ),
 		);
 		$args = array(
-			'hierarchical'      => false,
 			'labels'            => $labels,
 			'show_ui'           => true,
 			'query_var'         => true,
