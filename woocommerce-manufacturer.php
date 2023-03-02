@@ -61,6 +61,9 @@ class WooCommerce_Manufacturer {
 		}
 	}
 
+	/**
+	 * Register taxonomy Manufacturer
+	 */
 	public static function init() {
 		$labels = array(
 			'name'                       => esc_html__( 'Manufacturers', 'woocommerce-manufacturer' ),
@@ -82,16 +85,14 @@ class WooCommerce_Manufacturer {
 			'not_found'                  => esc_html__( 'No manufacturers found', ' woocommerce-manufacturer' ),
 		);
 		$args = array(
-			'hierarchical'      => true,
 			'labels'            => $labels,
 			'show_ui'           => true,
 			'query_var'         => true,
 			'public'            => true,
 			'rewrite'           => array(
 				'slug'         => 'manufacturer',
-				'hierarchical' => true,
-				'with_front'   => true,
-				'ep_mask'      => EP_PERMALINK,
+				'hierarchical' => false,
+				'with_front'   => true
 			),
 		);
 		register_taxonomy( 'manufacturer', array( 'product' ), $args );
